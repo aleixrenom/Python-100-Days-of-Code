@@ -1,5 +1,4 @@
 import os
-# os.system('cls')
 import random
 
 art = '''
@@ -13,12 +12,17 @@ art = '''
       '------'                           |__/           
 '''
 
-starting_deck = ["A", "A", "A", "A", "2", "2", "2", "2", "3", "3", "3", "3", "4", "4", "4", "4", "5", "5", "5", "5", "6", "6", "6", "6", "7", "7", "7", "7", "8", "8", "8", "8", "9", "9", "9", "9", "10", "10", "10", "10", "J", "J", "J", "J", "Q", "Q", "Q", "Q", "K", "K", "K", "K"]
+spades = "\U00002660"
+hearts = "\U00002665"
+diamonds = "\U00002666"
+clubs = "\U00002663"
+starting_deck = [f"A{spades}", f"A{hearts}", f"A{diamonds}", f"A{clubs}", f"2{spades}", f"2{hearts}", f"2{diamonds}", f"2{clubs}", f"3{spades}", f"3{hearts}", f"3{diamonds}", f"3{clubs}", f"4{spades}", f"4{hearts}", f"4{diamonds}", f"4{clubs}", f"5{spades}", f"5{hearts}", f"5{diamonds}", f"5{clubs}", f"6{spades}", f"6{hearts}", f"6{diamonds}", f"6{clubs}", f"7{spades}", f"7{hearts}", f"7{diamonds}", f"7{clubs}", f"8{spades}", f"8{hearts}", f"8{diamonds}", f"8{clubs}", f"9{spades}", f"9{hearts}", f"9{diamonds}", f"9{clubs}", f"10{spades}", f"10{hearts}", f"10{diamonds}", f"10{clubs}", f"J{spades}", f"J{hearts}", f"J{diamonds}", f"J{clubs}", f"Q{spades}", f"Q{hearts}", f"Q{diamonds}", f"Q{clubs}", f"K{spades}", f"K{hearts}", f"K{diamonds}", f"K{clubs}"]
 deck = list(starting_deck) # "deck = starting_deck" would only store the reference to the list
 random.shuffle(deck)
 
 # "card" is string, "current_score" is int
 def find_card_value(card, current_score):
+	card = card[:-1] # remove the suit symbol before evaluation
 	if card == "J" or card == "Q" or card == "K": return 10
 	elif card == "A" and current_score < 11: return 11
 	elif card == "A": return 1
@@ -27,7 +31,7 @@ def find_card_value(card, current_score):
 # "hand_to_value" is list of strings
 def find_hand_value(hand_to_value):
 	# To avoid aces being wrongly valued they have to be valued last
-	hand_to_value.sort(key=(lambda e: e == "A"))
+	hand_to_value.sort(key=(lambda e: e[0] == "A"))
 
 	hand_value = 0
 	for card in hand_to_value:
